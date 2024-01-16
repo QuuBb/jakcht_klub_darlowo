@@ -3,6 +3,7 @@ import HeaderLanding from './HeaderLanding';
 import SecondHeader from './SecondHeader';
 import LandingNews from './LandingNews';
 import LandingAbout from './LandingAbout';
+import LandingNewsAdmin from './LandingNewsAdmin';
 import Crew from './Crew';
 import Regaty from './Regaty';
 import Galeria from './Galeria';
@@ -10,7 +11,9 @@ import Kontakt from './Contact';
 import morze from '../../assets/media/firefly2.png';
 import { isMobile } from 'react-device-detect';
 import _debounce from 'lodash/debounce';
-import background from '../../assets/media/background.webp'
+import background from '../../assets/media/background.webp';
+import GaleriaAdmin from './GaleriaAdmin';
+
 
 export default function BackgroundLanding() {
   const [isHeaderLandingVisible, setHeaderLandingVisible] = useState(true);
@@ -72,45 +75,51 @@ export default function BackgroundLanding() {
     };
   }, []);
 
+  
+
   return (
     <>
-      {/* Conditional rendering for HeaderLanding or SecondHeader based on screen width */}
-      {isHeaderLandingVisible && (
-        <div style={headerLandingStyles}>
-          <HeaderLanding />
-        </div>
-      )}
-      {!isHeaderLandingVisible && <SecondHeader ref={secondHeaderRef} />}
-  
-      <div
-  ref={landingPhotoRef}
-  className="landingPhoto w-full h-screen bg-background bg-cover bg-center relative mb-0 mt-0"
-  style={{
-    backgroundImage: `url(${background})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: 0,
-    padding: 0,
-  }}
->
-        <div className="landing-title absolute top-1/2 left-1/2 font-josefinsans text-text animate__animated animate__slideInLeft">
-          <h1 className=" landing-title font-jaldi">Jacht Klub <br /> Królewskiego Miasta Darłowo</h1>
-        </div>
-      </div>
-  
-      <LandingAbout />
-      <Crew />
-      <LandingNews />
-      <div className='mt-20'>
-        <Galeria />
-      </div>
-      <div style={{ ...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
-        <Regaty />
-        <Kontakt />
-      </div>
+    
+      
+        <>
+          {isHeaderLandingVisible && (
+            <div style={headerLandingStyles}>
+              <HeaderLanding />
+            </div>
+          )}
+          {!isHeaderLandingVisible && <SecondHeader ref={secondHeaderRef} />}
+
+          <div
+            ref={landingPhotoRef}
+            className="landingPhoto w-full h-screen bg-background bg-cover bg-center relative mb-0 mt-0"
+            style={{
+              backgroundImage: `url(${background})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            <div className="landing-title absolute top-1/2 left-1/2 font-josefinsans text-text animate__animated animate__slideInLeft">
+              <h1 className=" landing-title font-jaldi">Jacht Klub <br /> Królewskiego Miasta Darłowo</h1>
+            </div>
+          </div>
+
+          <LandingAbout />
+          <Crew />
+          <LandingNews />
+          <div className='mt-20'>
+            <Galeria />
+          </div>
+          <div style={{ ...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
+            <Regaty />
+            <Kontakt />
+          </div>
+        </>
+    
     </>
   );
 }

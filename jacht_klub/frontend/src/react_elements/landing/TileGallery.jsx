@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TileGallery({title, imageSrc, altText, marginLeft, marginRight}) {
+function TileGallery({ title, imageSrc, altText, marginLeft, marginRight, onClick }) {
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        }
+    };
     return (
-        <article className="gallery" style={{marginLeft, marginRight, position: 'relative'}}>
+        <article className="gallery" style={{marginLeft, marginRight, position: 'relative'}} onClick={handleClick}>
             <div
                 className="gallery__frame"
                 style={{
@@ -47,6 +52,7 @@ TileGallery.propTypes = {
     altText: PropTypes.string.isRequired,
     marginLeft: PropTypes.string,
     marginRight: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 export default TileGallery;

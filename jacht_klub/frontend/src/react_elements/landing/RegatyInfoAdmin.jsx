@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 
-const RegatyInfo = () => {
+const RegatyInfoAdmin = () => {
     const [wyslano, setWyslano] = useState(false);
     const [formData, setFormData] = useState({
         nazwa: '',
@@ -54,32 +54,18 @@ const RegatyInfo = () => {
     }, [wyslano]);
 
     const [map, setMap] = useState(null);
-    const [markers, setMarkers] = useState([]);
 
     useEffect(() => {
-        const handleMapClick = (e) => {
-          console.log('Map clicked:', e.latlng);
-          const newMarker = e.latlng;
-          setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-        };
-      
-        // Attach click event listener to the map
         if (map) {
-          map.on('click', handleMapClick);
+          // Get the LatLng of the marker
+          const markerLatLng = [54.37086407145514, 16.316519484490588];
+    
+          // Fly to the marker's location
+          map.flyTo(markerLatLng, 14, {
+            duration: 2, // Animation duration in seconds
+          });
         }
-      
-        // Detach the event listener when the component is unmounted
-        return () => {
-          if (map) {
-            map.off('click', handleMapClick);
-          }
-        };
       }, [map]);
-      
-      
-      
-
-  
 
     return (
         <>
@@ -317,30 +303,19 @@ const RegatyInfo = () => {
                             
                         }}
                     >
-                     <MapContainer
-  center={[54.350215, 16.284053]}
-  zoom={13}
-  style={{ width: '100%', height: '100%' }}
-  whenCreated={setMap}
->
-  <TileLayer
+                        <MapContainer
+     center={[54.350215, 16.284053]}
+    zoom={13}
+    style={{ width: '100%', height: '1290px' }}
+    scrollWheelZoom={false}
+    whenCreated={setMap}
+  >
+   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
 
-  {markers.map((marker, index) => (
-    <Marker key={index} position={marker}>
-      <Popup>
-        <div>
-          <h2>Marker {index + 1}</h2>
-          <p>Lat: {marker.lat.toFixed(6)}</p>
-          <p>Lng: {marker.lng.toFixed(6)}</p>
-        </div>
-      </Popup>
-    </Marker>
-  ))}
 </MapContainer>
-
         
 
 
@@ -358,4 +333,4 @@ const RegatyInfo = () => {
     );
 };
 
-export default RegatyInfo;
+export default RegatyInfoAdmin;

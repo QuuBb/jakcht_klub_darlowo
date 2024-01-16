@@ -13,9 +13,9 @@ function Member({ title,  textWithoutList, imageSrc, altText, marginLeft, margin
       />
       <div className="card__content | flow">
         <div className="card__content--container | flow">
-          <h2 className="card__title text-white text-xl sm:text-base md:text-base lg:text-xl 2xl:text-4xl  font-jaldi">
-            {title}
-          </h2>
+        <h2 className="card__title text-white text-base sm:text-l md:text-l lg:text-xl 2xl:text-4xl font-jaldi">
+  {title}
+</h2>
         
             <p className="card__description  text-white text-l 2xl:text-2xl" >
               {textWithoutList}
