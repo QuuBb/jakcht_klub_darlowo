@@ -96,13 +96,40 @@ function getGalleryAlbumById($id)
     return json_encode($album);
 }
 
-function addCrew($vesselName, $vesselType, $mark, $length, $captain, $qualifications, $dateOfBirth, $address, $phone, $club, $crewmen)
+function addCrew()
 {
+    // Get the raw POST data
+    $postData = file_get_contents("php://input");
+
+    // Decode the JSON data
+    $data = json_decode($postData, true);
+
+    // Check if JSON decoding was successful
+    if ($data === null) {
+        // Handle invalid JSON
+        return json_encode(['error' => 'Invalid JSON data']);
+    }
+
+    // Extract parameters from the decoded JSON
+    $vesselName = $data['nazwa'];
+    $vesselType = $data['typ'];
+    $mark = $data['oznaczenie'];
+    $length = $data['dlugosc'];
+    $captain = $data['sternik'];
+    $qualifications = $data['stopien'];
+    $dateOfBirth = $data['rok'];
+    $address = $data['adres'];
+    $phone = $data['nr'];
+    $club = $data['klub'];
+    $crewmen = $data['zaloga'];
+
+    // Your SQL query
     $sql = 'INSERT INTO crew 
             (vessel_name, vessel_type, mark, length, captain, qualifications, date_of_birth, address, phone, club, crewmen) 
             VALUES 
             ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
 
+    // Bind parameters
     $params = [
         $vesselName,
         $vesselType,
@@ -117,6 +144,7 @@ function addCrew($vesselName, $vesselType, $mark, $length, $captain, $qualificat
         $crewmen,
     ];
 
+    // Execute the query
     $result = pg_query_params($GLOBALS['dbconn'], $sql, $params);
 
     if ($result === false) {
@@ -127,4 +155,47 @@ function addCrew($vesselName, $vesselType, $mark, $length, $captain, $qualificat
     return json_encode(['message' => 'Crew data added successfully']);
 }
 
-?>
+function addArticle($title, $content, $photo)
+{
+    $sql = 'INSERT INTO articles 
+            (title, content, photo) 
+            VALUES 
+            ($1, $2, $3)';
+
+    $params = [
+        $title,
+        $content,
+        $photo,
+    ];
+
+    $result = pg_query_params($GLOBALS['dbconn'], $sql, $params);
+
+    if ($result === false) {
+        // Handle database query error
+        return json_encode(['error' => 'Database error']);
+    }
+
+    return json_encode(['message' => 'Article added successfully']);
+}
+
+function addGalleryAlbum($title, $folderPath)
+{
+    $sql = 'INSERT INTO gallery_albums 
+            (title, folder_path) 
+            VALUES 
+            ($1, $2)';
+
+    $params = [
+        $title,
+        $folderPath,
+    ];
+
+    $result = pg_query_params($GLOBALS['dbconn'], $sql, $params);
+
+    if ($result === false) {
+        // Handle database query error
+        return json_encode(['error' => 'Database error']);
+    }
+
+    return json_encode(['message' => 'Gallery album added successfully']);
+}

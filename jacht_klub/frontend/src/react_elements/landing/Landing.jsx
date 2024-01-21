@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import HeaderLanding from './HeaderLanding';
 import SecondHeader from './SecondHeader';
 import LandingNews from './LandingNews';
@@ -9,117 +9,113 @@ import Regaty from './Regaty';
 import Galeria from './Galeria';
 import Kontakt from './Contact';
 import morze from '../../assets/media/firefly2.png';
-import { isMobile } from 'react-device-detect';
+import {isMobile} from 'react-device-detect';
 import _debounce from 'lodash/debounce';
 import background from '../../assets/media/background.webp';
 import GaleriaAdmin from './GaleriaAdmin';
 
+export default function BackgroundLanding(props) {
+    const [isHeaderLandingVisible, setHeaderLandingVisible] = useState(true);
+    const landingPhotoRef = useRef(null);
+    const secondHeaderRef = useRef(null);
 
-export default function BackgroundLanding() {
-  const [isHeaderLandingVisible, setHeaderLandingVisible] = useState(true);
-  const landingPhotoRef = useRef(null);
-  const secondHeaderRef = useRef(null);
+    const {isLoggedIn} = props;
 
-  const updateVisibility = _debounce(() => {
-    const screenWidth = window.innerWidth;
-    const isSmallScreen = screenWidth < 790;
-  
-    console.log('Screen Width:', screenWidth);
-    console.log('Is Small Screen:', isSmallScreen);
-  
-    setHeaderLandingVisible(!isSmallScreen);
-  }, 200); 
+    console.log(isLoggedIn);
 
-  const mainContainerStyle = {
-    backgroundImage: `url(${morze})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    height: '200vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: 0,
-    padding: 0,
-  };
+    const updateVisibility = _debounce(() => {
+        const screenWidth = window.innerWidth;
+        const isSmallScreen = screenWidth < 790;
+        setHeaderLandingVisible(!isSmallScreen);
+    }, 200);
 
-  const headerLandingStyles = {
-    transition: 'opacity 0.3s ease-in-out',
-    opacity: isHeaderLandingVisible ? 1 : 0,
-  };
-
-  useEffect(() => {
-    const landingPhotoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setHeaderLandingVisible(true);
-          } else {
-            setHeaderLandingVisible(false);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    landingPhotoObserver.observe(landingPhotoRef.current);
-
-    // Initial check
-    updateVisibility();
-
-    // Event listener for window resize
-    window.addEventListener('resize', updateVisibility);
-
-    return () => {
-      landingPhotoObserver.disconnect();
-      window.removeEventListener('resize', updateVisibility);
+    const mainContainerStyle = {
+        backgroundImage: `url(${morze})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '200vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: 0,
+        padding: 0,
     };
-  }, []);
 
-  
+    const headerLandingStyles = {
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: isHeaderLandingVisible ? 1 : 0,
+    };
 
-  return (
-    <>
-    
-      
+    useEffect(() => {
+        const landingPhotoObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setHeaderLandingVisible(true);
+                    } else {
+                        setHeaderLandingVisible(false);
+                    }
+                });
+            },
+            {threshold: 0.5}
+        );
+
+        landingPhotoObserver.observe(landingPhotoRef.current);
+
+        // Initial check
+        updateVisibility();
+
+        // Event listener for window resize
+        window.addEventListener('resize', updateVisibility);
+
+        return () => {
+            landingPhotoObserver.disconnect();
+            window.removeEventListener('resize', updateVisibility);
+        };
+    }, []);
+
+    return (
         <>
-          {isHeaderLandingVisible && (
-            <div style={headerLandingStyles}>
-              <HeaderLanding />
-            </div>
-          )}
-          {!isHeaderLandingVisible && <SecondHeader ref={secondHeaderRef} />}
+            <>
+                {isHeaderLandingVisible && (
+                    <div style={headerLandingStyles}>
+                        <HeaderLanding />
+                    </div>
+                )}
+                {!isHeaderLandingVisible && <SecondHeader ref={secondHeaderRef} />}
 
-          <div
-            ref={landingPhotoRef}
-            className="landingPhoto w-full h-screen bg-background bg-cover bg-center relative mb-0 mt-0"
-            style={{
-              backgroundImage: `url(${background})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            <div className="landing-title absolute top-1/2 left-1/2 font-josefinsans text-text animate__animated animate__slideInLeft">
-              <h1 className=" landing-title font-jaldi">Jacht Klub <br /> Królewskiego Miasta Darłowo</h1>
-            </div>
-          </div>
+                <div
+                    ref={landingPhotoRef}
+                    className="landingPhoto w-full h-screen bg-background bg-cover bg-center relative mb-0 mt-0"
+                    style={{
+                        backgroundImage: `url(${background})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        margin: 0,
+                        padding: 0,
+                    }}
+                >
+                    <div className="landing-title absolute top-1/2 left-1/2 font-josefinsans text-text animate__animated animate__slideInLeft">
+                        <h1 className=" landing-title font-jaldi">
+                            Jacht Klub <br /> Królewskiego Miasta Darłowo
+                        </h1>
+                    </div>
+                </div>
 
-          <LandingAbout />
-          <Crew />
-          <LandingNews />
-          <div className='mt-20'>
-            <Galeria />
-          </div>
-          <div style={{ ...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
-            <Regaty />
-            <Kontakt />
-          </div>
+                <LandingAbout />
+                <Crew />
+                <LandingNews />
+                <div className="mt-20">
+                    <Galeria />
+                </div>
+                <div style={{...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
+                    <Regaty />
+                    <Kontakt />
+                </div>
+            </>
         </>
-    
-    </>
-  );
+    );
 }
