@@ -69,14 +69,16 @@ function Header() {
             </li>
             <li>
             <ul className=" menu">
-  <li>
+            <li>
     <a href="#" className='font-jaldi'>DOKUMENTY</a>
     
     <ul>
-      <li><a href="#">Dokument 1</a></li>
-      <li><a href="#">Dokument 2</a></li>
-      <li><a href="#">Dokument 3</a></li>
-      <li><a href="#">Dokument 4</a></li>
+    <li><a href="../../documents/regulamin.docx" target="_blank" rel="noopener noreferrer" download>Regulamin regat</a></li>
+              <li><a href="../../documents/info.docx" target="_blank" rel="noopener noreferrer" download>Informacje dla kapitanów 2</a></li>
+              <li><a href="../../documents/zgloszenie.doc" target="_blank" rel="noopener noreferrer" download>Zgłoszenie do regat</a></li>
+              <li><a href="../../documents/STATUT.docx"target="_blank" rel="noopener noreferrer" download>Statut</a></li>
+              <li><a href="../../documents/Deklaracja.docx"target="_blank" rel="noopener noreferrer" download>Deklaracja członkostwa</a></li>
+              <li><a href="../../documents/Decyzja.jpg"target="_blank" rel="noopener noreferrer" download>Decyzja</a></li>
     </ul>
   </li>
 </ul>
