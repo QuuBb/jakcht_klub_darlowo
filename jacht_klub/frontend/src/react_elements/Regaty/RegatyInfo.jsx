@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../general/Header';
 import InputComponent from './Input';
 import jezioro from '../../assets/media/bukowo.webp';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 
 const RegatyInfo = () => {
     const isMobile = window.innerWidth <= 768;
+function RegatyInfo() {
     const [wyslano, setWyslano] = useState(false);
     const [formData, setFormData] = useState({
         nazwa: '',
@@ -43,6 +44,7 @@ const RegatyInfo = () => {
             });
 
             console.log('Server response:', response);
+            console.log(JSON.stringify(formData));
 
             setWyslano(true);
         } catch (error) {
@@ -50,20 +52,18 @@ const RegatyInfo = () => {
         }
     };
 
-    useEffect(() => {
-       
-    }, [wyslano]);
+    useEffect(() => {}, [wyslano]);
 
     const [map, setMap] = useState(null);
     const [markers, setMarkers] = useState([]);
 
     useEffect(() => {
-        const handleMapClick = (e) => {
-          console.log('Map clicked:', e.latlng);
-          const newMarker = e.latlng;
-          setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+        const handleMapClick = e => {
+            console.log('Map clicked:', e.latlng);
+            const newMarker = e.latlng;
+            setMarkers(prevMarkers => [...prevMarkers, newMarker]);
         };
-      
+
         // Attach click event listener to the map
         if (map) {
           map.on('click', handleMapClick);
@@ -336,5 +336,6 @@ const RegatyInfo = () => {
         </>
     );
 };
+}
 
 export default RegatyInfo;

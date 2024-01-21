@@ -82,6 +82,28 @@ switch ($method) {
                 // Call the function to add crew data
                 echo addCrew($vesselName, $vesselType, $mark, $length, $captain, $qualifications, $dateOfBirth, $address, $phone, $club, $crewmen);
                 break;
+            case 'add_article':
+                var_dump('addArticle function called');
+
+                // Extract data from the POST request
+                $title = isset($_POST['title']) ? $_POST['title'] : null;
+                $content = isset($_POST['content']) ? $_POST['content'] : null;
+                $photo = isset($_POST['photo']) ? $_POST['photo'] : null;
+
+                // Call the function to add article data
+                echo addArticle($title, $content, $photo);
+
+                break;
+            case 'add_gallery_album':
+                var_dump('addGalleryAlbum function called');
+
+                // Extract data from the POST request
+                $albumTitle = isset($_POST['album_title']) ? $_POST['album_title'] : null;
+                $folderPath = isset($_POST['folder_path']) ? $_POST['folder_path'] : null;
+
+                // Call the function to add gallery album data
+                echo addGalleryAlbum($albumTitle, $folderPath);
+                break;
             default:
                 http_response_code(404);
                 echo json_encode(['error' => 'Not Found']);
@@ -91,4 +113,3 @@ switch ($method) {
         http_response_code(404);
         echo json_encode(['error' => 'Not Found']);
 }
-?>
