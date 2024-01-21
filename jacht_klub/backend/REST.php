@@ -157,6 +157,23 @@ function addCrew()
 
 function addArticle($title, $content, $photo)
 {
+    // Get the raw POST data
+    $postData = file_get_contents("php://input");
+
+    // Decode the JSON data
+    $data = json_decode($postData, true);
+
+    // Check if JSON decoding was successful
+    if ($data === null) {
+        // Handle invalid JSON
+        return json_encode(['error' => 'Invalid JSON data']);
+    }
+
+    // Extract parameters from the decoded JSON
+    $title = $data['title'];
+    $content = $data['text'];
+    $photo = $data['photo'];
+
     $sql = 'INSERT INTO articles 
             (title, content, photo) 
             VALUES 
@@ -180,6 +197,21 @@ function addArticle($title, $content, $photo)
 
 function addGalleryAlbum($title, $folderPath)
 {
+    // Get the raw POST data
+    $postData = file_get_contents("php://input");
+
+    // Decode the JSON data
+    $data = json_decode($postData, true);
+
+    // Check if JSON decoding was successful
+    if ($data === null) {
+        // Handle invalid JSON
+        return json_encode(['error' => 'Invalid JSON data']);
+    }
+
+    $title = $data['title'];
+    $folderPath = $data['path'];
+
     $sql = 'INSERT INTO gallery_albums 
             (title, folder_path) 
             VALUES 
