@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 
 
 const RegatyInfo = () => {
+    const isMobile = window.innerWidth <= 768;
     const [wyslano, setWyslano] = useState(false);
     const [formData, setFormData] = useState({
         nazwa: '',
@@ -83,26 +84,24 @@ const RegatyInfo = () => {
 
     return (
         <>
-          <div
-                className="flex"
+        <Header />
+          <div className='flex'
+                
                 style={{
                     backgroundImage: `url(${jezioro})`,
                     backgroundSize: 'cover',
                     height: 'auto',
                     display: 'flex',
                     flexDirection: 'column',
-                    position: 'relative',
+                    
+                    alignItems: 'center', // Center horizontally
+                    justifyContent: 'center',
                 }}
             >
-                 <Header />
+                 
                 <div className='flex'>
-                 <form
-                    style={{
-                        width: '48%', 
-                        marginLeft: '2%',
-                        marginRight: '1%',
-                    }}
-                >
+                <div  style={{ gap: '5px' }}>
+                <form className="sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4 2xl:w-full mx-auto">
            
           
                 <div
@@ -112,13 +111,13 @@ const RegatyInfo = () => {
                         margin: 'auto',
                         marginTop: '6%',
                         marginBottom: '3%',
-                        marginLeft:"3%"
+                        marginLeft:"auto"
                     }}
                 >
                     <div
                         style={{
-                            width: '600px',
-                            height: '1310px',
+                            width: '1200px',
+                            height: '1400px',
                             background: 'white',
                             border: '10px solid transparent',
                             backgroundClip: 'padding-box',
@@ -292,69 +291,49 @@ const RegatyInfo = () => {
                 
             
         </form>
+        {/* <div className="sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4 2xl:w-full mx-auto"> */}
 
-        <div style={{
-                        width: '48%', // Adjust as needed
-                        marginLeft: '1%',
-                        marginRight: '2%',
-                        marginTop:'5%'
-                    }}>
-
-        <div >
-
-<div
-                        style={{
-                            width: '600px',
-                            height: '1310px',
-                            
-                            border: '10px solid transparent',
-                            backgroundClip: 'padding-box',
-                            borderImage: `linear-gradient(to bottom, #30415D, #566B8C) 1`,
-                            boxShadow: '0 4px 4px rgba(0, 0, 0, 0.1)',
-                            position: 'relative',
-                            zIndex: 1,
-                            
-                            
-                        }}
-                    >
-                     <MapContainer
-  center={[54.350215, 16.284053]}
-  zoom={13}
-  style={{ width: '100%', height: '100%' }}
-  whenCreated={setMap}
->
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-
-  {markers.map((marker, index) => (
-    <Marker key={index} position={marker}>
-      <Popup>
-        <div>
-          <h2>Marker {index + 1}</h2>
-          <p>Lat: {marker.lat.toFixed(6)}</p>
-          <p>Lng: {marker.lng.toFixed(6)}</p>
-        </div>
-      </Popup>
-    </Marker>
-  ))}
-</MapContainer>
-
-        
-
-
-
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        
-       
-
+      
+                            <div className="sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4 2xl:w-full mx-auto" style={{ width: '1200px', height: '1400px', border: '10px solid transparent', backgroundClip: 'padding-box', borderImage: `linear-gradient(to bottom, #30415D, #566B8C) 1`, boxShadow: '0 4px 4px rgba(0, 0, 0, 0.1)', position: 'relative', zIndex: 1 }}>
+                                {isMobile && (
+                                    <MapContainer center={[54.350215, 16.284053]} zoom={13} style={{ width: '100%' }} whenCreated={setMap}>
+                                        <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                        {markers.map((marker, index) => (
+                                            <Marker key={index} position={marker}>
+                                                <Popup>
+                                                    <div>
+                                                        <h2>Marker {index + 1}</h2>
+                                                        <p>Lat: {marker.lat.toFixed(6)}</p>
+                                                        <p>Lng: {marker.lng.toFixed(6)}</p>
+                                                    </div>
+                                                </Popup>
+                                            </Marker>
+                                        ))}
+                                    </MapContainer>
+                                )}
+                                {!isMobile && (
+                                    <MapContainer center={[54.350215, 16.284053]} zoom={13} style={{ width: '100%', height: '100%' }} whenCreated={setMap}>
+                                        <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                        {markers.map((marker, index) => (
+                                            <Marker key={index} position={marker}>
+                                                <Popup>
+                                                    <div>
+                                                        <h2>Marker {index + 1}</h2>
+                                                        <p>Lat: {marker.lat.toFixed(6)}</p>
+                                                        <p>Lng: {marker.lng.toFixed(6)}</p>
+                                                    </div>
+                                                </Popup>
+                                            </Marker>
+                                        ))}
+                                    </MapContainer>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {/* </div> */}
+           
         </>
-
     );
 };
 
