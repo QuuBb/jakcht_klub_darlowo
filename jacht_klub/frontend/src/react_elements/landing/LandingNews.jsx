@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import QuickNews from './QuickNews';
 import NavigationButton from '../general/NavigationButton';
-import { FaArrowLeft, FaArrowRight, FaPlus } from 'react-icons/fa';
+import {FaArrowLeft, FaArrowRight, FaPlus} from 'react-icons/fa';
 
 export default function LandingNews() {
     const [articlesArray, setArticlesArray] = useState([]);
-   
 
     useEffect(() => {
         fetch('http://localhost:3000/backend/articles')
@@ -19,24 +18,18 @@ export default function LandingNews() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-   
-
-  
 
     return (
         <>
             <div id="aktualnosci">
                 <h1 id="aktualnosci" className="mt-1 mb-20 text-4xl text-white"></h1>
-                
-                <h1 className="text-3xl md:text-lg lg:text-3xl sm:text-base 2xl:text-5xl font-josefinsans text-text font-bold ml-10 mt-20">Aktualności</h1>
-                
-            
 
-                
+                <h1 className="text-3xl md:text-lg lg:text-3xl sm:text-base 2xl:text-5xl font-josefinsans text-text font-bold ml-10 mt-20">Aktualności</h1>
 
                 <div className="bg-white flex flex-col justify-center gap-10">
                     {articlesArray.slice(0, 2).map(article => (
                         <QuickNews
+                            key={article.id}
                             index={article.id} // Make sure to use a unique key when mapping over elements
                             title={article.title}
                             description={article.content.slice(0, 256)}

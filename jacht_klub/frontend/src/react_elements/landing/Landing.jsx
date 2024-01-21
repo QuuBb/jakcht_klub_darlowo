@@ -14,14 +14,11 @@ import _debounce from 'lodash/debounce';
 import background from '../../assets/media/background.webp';
 import GaleriaAdmin from './GaleriaAdmin';
 
-export default function BackgroundLanding(props) {
+export default function BackgroundLanding() {
     const [isHeaderLandingVisible, setHeaderLandingVisible] = useState(true);
+    const [isAuthTokenSet, setAuthTokenSet] = useState(false);
     const landingPhotoRef = useRef(null);
     const secondHeaderRef = useRef(null);
-
-    const {isLoggedIn} = props;
-
-    console.log(isLoggedIn);
 
     const updateVisibility = _debounce(() => {
         const screenWidth = window.innerWidth;
@@ -47,11 +44,30 @@ export default function BackgroundLanding(props) {
     };
 
     useEffect(() => {
+        const checkAuthToken = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/cookie_check.php', {
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setAuthTokenSet(!!data.auth_token); // Set isAuthTokenSet based on the presence of auth_token
+                } else {
+                    setAuthTokenSet(false);
+                }
+            } catch (error) {
+                console.error('Error checking auth token:', error.message);
+                setAuthTokenSet(false);
+            }
+        };
+
         const landingPhotoObserver = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         setHeaderLandingVisible(true);
+                        checkAuthToken();
                     } else {
                         setHeaderLandingVisible(false);
                     }
@@ -108,9 +124,7 @@ export default function BackgroundLanding(props) {
                 <LandingAbout />
                 <Crew />
                 <LandingNews />
-                <div className="mt-20">
-                    <Galeria />
-                </div>
+                <div className="mt-20">{isAuthTokenSet ? <GaleriaAdmin /> : <Galeria />}</div>
                 <div style={{...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
                     <Regaty />
                     <Kontakt />

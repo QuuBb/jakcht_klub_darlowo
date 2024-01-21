@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Landing from '../react_elements/landing/Landing';
 import '../styles/index.css';
+import CheckCookieComponent from '../react_elements/general/CheckCookie';
 
 // Function to get the value of a cookie by name
 function getCookie(name) {
@@ -20,6 +21,6 @@ const isLoggedIn = !!getCookie('auth_token');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <Landing isLoggedIn={isLoggedIn} />
+        <Landing />
     </React.StrictMode>
 );
