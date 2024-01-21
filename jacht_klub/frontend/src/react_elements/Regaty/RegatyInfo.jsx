@@ -175,6 +175,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.nazwa}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
                                         id="typ"
@@ -183,6 +184,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.typ}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
                                         id="oznaczenie"
@@ -191,6 +193,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.oznaczenie}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
                                         id="dlugosc"
@@ -199,6 +202,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.dlugosc}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                 </div>
                                 <div
@@ -221,6 +225,8 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.sternik}
                                         onChange={handleInputChange}
+                                        type="text"
+                                        
                                     />
                                     <InputComponent
                                         id="stopien"
@@ -229,6 +235,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.stopien}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
                                         id="rok"
@@ -237,6 +244,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.rok}
                                         onChange={handleInputChange}
+                                        type="date"
                                     />
                                     <InputComponent
                                         id="adres"
@@ -245,6 +253,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.adres}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
                                         id="nr"
@@ -253,6 +262,7 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.nr}
                                         onChange={handleInputChange}
+                                        type="tel"
                                     />
                                     <InputComponent
                                         id="klub"
@@ -261,14 +271,16 @@ function RegatyInfo() {
                                         customClass="input__field-margin"
                                         value={formData.klub}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                     <InputComponent
-                                        id="załoga"
+                                        id="zaloga"
                                         placeholder="input__field"
                                         label="Załoga"
                                         customClass="input__field-margin"
                                         value={formData.zaloga}
                                         onChange={handleInputChange}
+                                        type="text"
                                     />
                                 </div>
 

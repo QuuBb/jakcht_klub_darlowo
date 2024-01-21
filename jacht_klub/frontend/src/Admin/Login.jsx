@@ -61,6 +61,7 @@ const LoginForm = () => {
                 // Handle unsuccessful login
                 const errorData = await response.json();
                 setErrorMessage(errorData.error || 'Invalid username or password');
+                setIsLoggedIn(true);
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -76,32 +77,39 @@ const LoginForm = () => {
         setIsLoggedIn(false);
     };
 
+    
     return (
+        <div className="login-container" style={{marginTop:"10%"}}>
         <div>
             {isLoggedIn ? (
                 <>
-                    <h2>Welcome! You are logged in.</h2>
-                    <button onClick={handleLogout}>Logout</button>
+                    <h2 style={{ fontWeight: "bold", textAlign: "center", margin: "0 auto", marginBottom:"10px" }}>Witaj! zalogowałeś się do panelu administratora.</h2>
+                    
+
+                    <button onClick={handleLogout} className="login-button">Wyloguj</button>
                 </>
             ) : (
                 <>
-                    <h2>Login</h2>
+                   <h2 style={{ fontWeight: "bold", textAlign: "center", margin: "0 auto", marginBottom:"10px" }}>
+  Zaloguj się do panelu administracyjnego
+</h2>
 
-                    {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
+                    {errorMessage && <p style={{color: 'red', fontWeight:"bold"}}>{errorMessage}</p>}
 
                     <form onSubmit={handleLogin}>
-                        <label htmlFor="username">Username:</label>
-                        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required />
+                        <label htmlFor="username" style={{fontWeight:"bold"}}>Login:</label>
+                        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required className="login-input" />
                         <br />
 
-                        <label htmlFor="password">Password:</label>
-                        <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+                        <label htmlFor="password" style={{fontWeight:"bold"}}>Hasło:</label>
+                        <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required className="login-input"/>
                         <br />
 
-                        <button type="submit">Login</button>
+                        <button type="submit" className="login-button">Zaloguj się</button>
                     </form>
                 </>
             )}
+        </div>
         </div>
     );
 };
