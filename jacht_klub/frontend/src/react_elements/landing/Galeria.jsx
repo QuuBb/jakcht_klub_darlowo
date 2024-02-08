@@ -48,7 +48,7 @@ function Galeria() {
                 <Slider {...settings}>
                     {galleryAlbums.map(album => (
                         <div key={album.id}>
-                            <a href={`../../src/html/galeria.html?id=${album.id}`}>
+                            <a href={`../../src/html/galeria.html/${album.id}`}>
                                 <TileGallery title={album.title} imageSrc={`${album.folder_path}/${album.photos}`} marginLeft="20px" marginRight="20px" />
                             </a>
                             <NextArrow />
