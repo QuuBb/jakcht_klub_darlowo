@@ -38,7 +38,7 @@ const NewsPage = () => {
         };
 
         fetchData();
-        checkAuthToken();
+        //checkAuthToken();
     }, []);
 
     return (

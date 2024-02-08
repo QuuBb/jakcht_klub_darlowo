@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import HeaderLanding from './HeaderLanding';
 import SecondHeader from './SecondHeader';
 import LandingNews from './LandingNews';
@@ -9,7 +9,7 @@ import Regaty from './Regaty';
 import Galeria from './Galeria';
 import Kontakt from './Contact';
 import morze from '../../assets/media/firefly2.png';
-import { isMobile } from 'react-device-detect';
+import {isMobile} from 'react-device-detect';
 import _debounce from 'lodash/debounce';
 import background from '../../assets/media/background.webp';
 import GaleriaAdmin from './GaleriaAdmin';
@@ -67,13 +67,13 @@ export default function BackgroundLanding() {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         setHeaderLandingVisible(true);
-                        checkAuthToken();
+                        //checkAuthToken();
                     } else {
                         setHeaderLandingVisible(false);
                     }
                 });
             },
-            { threshold: 0.5 }
+            {threshold: 0.5}
         );
 
         landingPhotoObserver.observe(landingPhotoRef.current);
@@ -125,7 +125,7 @@ export default function BackgroundLanding() {
                 <Crew />
                 <LandingNews />
                 <div className="mt-20">{isAuthTokenSet ? <GaleriaAdmin /> : <Galeria />}</div>
-                <div style={{ ...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto' }}>
+                <div style={{...mainContainerStyle, height: isHeaderLandingVisible ? '200vh' : 'auto'}}>
                     <Regaty />
                     <Kontakt />
                 </div>

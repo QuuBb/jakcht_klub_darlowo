@@ -26,7 +26,7 @@ const LoginForm = () => {
             }
         };
 
-        checkCookie();
+        //checkCookie();
     }, []);
 
     useEffect(() => {}, []);
@@ -77,39 +77,63 @@ const LoginForm = () => {
         setIsLoggedIn(false);
     };
 
-    
     return (
-        <div className="login-container" style={{marginTop:"10%"}}>
-        <div>
-            {isLoggedIn ? (
-                <>
-                    <h2 style={{ fontWeight: "bold", textAlign: "center", margin: "0 auto", marginBottom:"10px" }}>Witaj! zalogowałeś się do panelu administratora.</h2>
-                    
+        <div className="login-container" style={{marginTop: '10%'}}>
+            <div>
+                {isLoggedIn ? (
+                    <>
+                        <h2 style={{fontWeight: 'bold', textAlign: 'center', margin: '0 auto', marginBottom: '10px'}}>
+                            Witaj! zalogowałeś się do panelu administratora.
+                        </h2>
 
-                    <button onClick={handleLogout} className="login-button">Wyloguj</button>
-                </>
-            ) : (
-                <>
-                   <h2 style={{ fontWeight: "bold", textAlign: "center", margin: "0 auto", marginBottom:"10px" }}>
-  Zaloguj się do panelu administracyjnego
-</h2>
+                        <button onClick={handleLogout} className="login-button">
+                            Wyloguj
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <h2 style={{fontWeight: 'bold', textAlign: 'center', margin: '0 auto', marginBottom: '10px'}}>
+                            Zaloguj się do panelu administracyjnego
+                        </h2>
 
-                    {errorMessage && <p style={{color: 'red', fontWeight:"bold"}}>{errorMessage}</p>}
+                        {errorMessage && <p style={{color: 'red', fontWeight: 'bold'}}>{errorMessage}</p>}
 
-                    <form onSubmit={handleLogin}>
-                        <label htmlFor="username" style={{fontWeight:"bold"}}>Login:</label>
-                        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required className="login-input" />
-                        <br />
+                        <form onSubmit={handleLogin}>
+                            <label htmlFor="username" style={{fontWeight: 'bold'}}>
+                                Login:
+                            </label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleInputChange}
+                                required
+                                className="login-input"
+                            />
+                            <br />
 
-                        <label htmlFor="password" style={{fontWeight:"bold"}}>Hasło:</label>
-                        <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required className="login-input"/>
-                        <br />
+                            <label htmlFor="password" style={{fontWeight: 'bold'}}>
+                                Hasło:
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                required
+                                className="login-input"
+                            />
+                            <br />
 
-                        <button type="submit" className="login-button">Zaloguj się</button>
-                    </form>
-                </>
-            )}
-        </div>
+                            <button type="submit" className="login-button">
+                                Zaloguj się
+                            </button>
+                        </form>
+                    </>
+                )}
+            </div>
         </div>
     );
 };

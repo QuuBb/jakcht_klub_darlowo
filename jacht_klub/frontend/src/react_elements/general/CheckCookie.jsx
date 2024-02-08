@@ -21,7 +21,7 @@ const CheckCookieComponent = () => {
             }
         };
 
-        checkCookie();
+        //checkCookie();
     }, []);
 };
 
