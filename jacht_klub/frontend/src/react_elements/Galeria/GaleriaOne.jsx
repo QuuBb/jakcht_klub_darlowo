@@ -12,9 +12,9 @@ function GaleriaOne() {
 
     useEffect(() => {
         // Fetch gallery album with id=1 from the API
-        fetch(`http://localhost:3000/backend/gallery-album?id=${id}`)
+        fetch(`http://localhost:3000/backend/gallery-album/${id}`)
             .then(response => response.json())
-            .then(data => setGalleryAlbum(data))
+            .then(data => setGalleryAlbum(data[0]))
             .catch(error => console.error('Error fetching gallery album:', error));
     }, []);
 
@@ -28,6 +28,8 @@ function GaleriaOne() {
             <img key={index} src={'../../' + galleryAlbum.folder_path + '/' + photo} style={{height: '200px', width: '400px'}} />
         ));
     };
+
+    console.log(galleryAlbum);
 
     return (
         <div>
