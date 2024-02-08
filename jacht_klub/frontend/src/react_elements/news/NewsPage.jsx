@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../general/Header';
 import News from './News';
 import LandingNewsAdmin from '../landing/LandingNewsAdmin';
@@ -21,14 +21,14 @@ const NewsPage = () => {
 
         const checkAuthToken = async () => {
             try {
-                const response = await fetch('http://localhost:3000/cookie_check.php', {
+                const response = await fetch('http://localhost:3000/cookie_check', {
                     method: 'GET',
                     credentials: 'include', // include credentials (cookies) in the request
                 });
 
                 if (response.ok) {
                     const result = await response.json();
-                    setAuthToken(result.auth_token);
+                    setAuthToken(!!result.auth_token);
                 } else {
                     console.error('Error checking auth token:', response.statusText);
                 }

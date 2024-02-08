@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import Landing from '../react_elements/landing/Landing';
 import '../styles/index.css';
 import CheckCookieComponent from '../react_elements/general/CheckCookie';
@@ -19,8 +19,10 @@ function getCookie(name) {
 // Check if the user is logged in based on the 'auth_token' cookie
 const isLoggedIn = !!getCookie('auth_token');
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.render(
     <React.StrictMode>
         <Landing />
-    </React.StrictMode>
+        <CheckCookieComponent />
+    </React.StrictMode>,
+    document.getElementById('root')
 );
