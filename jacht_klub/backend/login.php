@@ -1,6 +1,7 @@
 <?php
 // Allow requests from the specific origin (replace with the actual origin of your React app)
 header("Access-Control-Allow-Origin: http://192.168.100.9:5995");
+header("Access-Control-Allow-Origin: http://localhost:5995");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");

@@ -2,6 +2,7 @@
 // load_auth_token.php
 
 header("Access-Control-Allow-Origin: http://192.168.100.9:5995");
+header("Access-Control-Allow-Origin: http://localhost:5995");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
@@ -34,4 +35,3 @@ header('HTTP/1.1 405 Method Not Allowed');
 header('Content-Type: application/json');
 echo json_encode(['error' => 'Method Not Allowed']);
 exit;
-?>
