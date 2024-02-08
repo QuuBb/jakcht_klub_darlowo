@@ -1,160 +1,104 @@
-const { Pool } = require('pg');
-const pool = require('./database/connection.js');
+const Pool = require('pg').Pool;
+const pool = new Pool({
+    host: 'localhost',
+    port: 5432,
+    database: 'database',
+    user: 'postgres',
+    password: '123456',
+});
 
-function getArticles() {
-    const sql = 'SELECT * FROM articles ORDER BY id DESC';
-    const result = pg_query_params(dbconn, sql, []);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify(pg_fetch_all(result));
-}
-
-function getArticleById(id) {
-    const sql = 'SELECT * FROM articles WHERE id=$1';
-    const result = pg_query_params(dbconn, sql, [id]);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify(pg_fetch_object(result));
-}
-
-function getRegattas() {
-    const sql = 'SELECT * FROM regatta ORDER BY id DESC';
-    const result = pg_query_params(dbconn, sql, []);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify(pg_fetch_all(result));
-}
-
-function getRegattasResult(year, run) {
-    const tableName = 'regatta_results_' + year + '_' + run;
-    const sql = `SELECT * FROM ${tableName}`;
-    const result = pg_query_params(dbconn, sql, []);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify(pg_fetch_all(result));
-}
-
-function getGalleryAlbums() {
-    const sql = 'SELECT * FROM gallery_albums ORDER BY id DESC';
-    const result = pg_query_params(dbconn, sql, []);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    const albums = pg_fetch_all(result);
-    albums.forEach((album, index) => {
-        const folderPath = album['folder_path'];
-        const photos = Array.from(fs.readdirSync("../frontend/" + folderPath)).slice(2);
-        albums[index]['photos'] = photos;
+const getArticles = (request, response) => {
+    pool.query('SELECT * FROM articles ORDER BY id DESC', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
     });
-    return JSON.stringify(albums);
-}
+};
 
-function getGalleryAlbumById(id) {
-    const sql = 'SELECT * FROM gallery_albums WHERE id=$1';
-    const result = pg_query_params(dbconn, sql, [id]);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    const album = pg_fetch_assoc(result);
-    if (album) {
-        const folderPath = album['folder_path'];
-        const photos = Array.from(fs.readdirSync("../frontend/" + folderPath)).slice(2);
-        album['photos'] = photos;
-    }
-    return JSON.stringify(album);
-}
+const getArticleById = (request, response) => {
+    const id = parseInt(request.params.id);
 
-function addCrew() {
-    const postData = fs.readFileSync("php://input");
-    const data = JSON.parse(postData);
-    if (data === null) {
-        return JSON.stringify({ error: 'Invalid JSON data' });
-    }
-    const vesselName = data['nazwa'];
-    const vesselType = data['typ'];
-    const mark = data['oznaczenie'];
-    const length = data['dlugosc'];
-    const captain = data['sternik'];
-    const qualifications = data['stopien'];
-    const dateOfBirth = data['rok'];
-    const address = data['adres'];
-    const phone = data['nr'];
-    const club = data['klub'];
-    const crewmen = data['zaloga'];
-    const sql = 'INSERT INTO crew (vessel_name, vessel_type, mark, length, captain, qualifications, date_of_birth, address, phone, club, crewmen) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
-    const params = [
-        vesselName,
-        vesselType,
-        mark,
-        length,
-        captain,
-        qualifications,
-        dateOfBirth,
-        address,
-        phone,
-        club,
-        crewmen,
-    ];
-    const result = pg_query_params(dbconn, sql, params);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify({ message: 'Crew data added successfully' });
-}
+    pool.query('SELECT * FROM articles WHERE id=$1', [id], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
 
-function addArticle(title, content, photo) {
-    const postData = fs.readFileSync("php://input");
-    const data = JSON.parse(postData);
-    if (data === null) {
-        return JSON.stringify({ error: 'Invalid JSON data' });
-    }
-    const articleTitle = data['title'];
-    const articleContent = data['text'];
-    const articlePhoto = data['photo'];
-    const sql = 'INSERT INTO articles (title, content, photo) VALUES ($1, $2, $3)';
-    const params = [
-        articleTitle,
-        articleContent,
-        articlePhoto,
-    ];
-    const result = pg_query_params(dbconn, sql, params);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify({ message: 'Article added successfully' });
-}
+const getRegattas = (request, response) => {
+    pool.query('SELECT * FROM regatta ORDER BY id DESC', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
 
+const getGalleryAlbums = (request, response) => {
+    pool.query('SELECT * FROM gallery_albums ORDER BY id DESC', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
 
-function addGalleryAlbum(title, folderPath) {
-    const postData = fs.readFileSync("php://input");
-    const data = JSON.parse(postData);
-    if (data === null) {
-        return JSON.stringify({ error: 'Invalid JSON data' });
-    }
-    const albumTitle = data['title'];
-    const albumFolderPath = data['path'];
-    const sql = 'INSERT INTO gallery_albums (title, folder_path) VALUES ($1, $2)';
-    const params = [
-        albumTitle,
-        albumFolderPath,
-    ];
-    const result = pg_query_params(dbconn, sql, params);
-    if (result === false) {
-        return JSON.stringify({ error: 'Database error' });
-    }
-    return JSON.stringify({ message: 'Gallery album added successfully' });
-}
+const getGalleryAlbumById = (request, response) => {
+    const id = parseInt(request.params.id);
 
+    pool.query('SELECT * FROM gallery_albums WHERE id=$1', [id], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
 
+const addCrew = (request, response) => {
+    const {nazwa, typ, oznaczenie, dlugosc, sternik, stopien, rok, adres, nr, klub, zaloga} = request.body;
+
+    pool.query(
+        'INSERT INTO crew (vessel_name, vessel_type, mark, length, captain, qualifications, date_of_birth, address, phone, club, crewmen) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+        [nazwa, typ, oznaczenie, dlugosc, sternik, stopien, rok, adres, nr, klub, zaloga],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(201).send(`Crew added with ID: ${results.rows[0].id}`);
+        }
+    );
+};
+
+const addArticle = (request, response) => {
+    const {title, text, photo} = request.body;
+
+    pool.query('INSERT INTO articles (title, content, photo) VALUES ($1, $2, $3)', [title, text, photo], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(201).send(`Crew added with ID: ${results.rows[0].id}`);
+    });
+};
+
+const addGalleryAlbum = (request, response) => {
+    const {title, path} = request.body;
+
+    pool.query('INSERT INTO gallery_albums (title, folder_path) VALUES ($1, $2)', [title, path], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(201).send(`Crew added with ID: ${results.rows[0].id}`);
+    });
+};
 
 module.exports = {
-    getGalleryAlbums,
     getArticles,
     getArticleById,
+    getGalleryAlbums,
+    getGalleryAlbumById,
+    addCrew,
     addArticle,
     addGalleryAlbum,
 };

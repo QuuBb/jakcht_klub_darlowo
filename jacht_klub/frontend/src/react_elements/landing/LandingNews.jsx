@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import QuickNews from './QuickNews';
 import NavigationButton from '../general/NavigationButton';
-import { FaArrowLeft, FaArrowRight, FaPlus } from 'react-icons/fa';
-import { getArticles } from '../../../../backend/REST';
+import {FaArrowLeft, FaArrowRight, FaPlus} from 'react-icons/fa';
+import {getArticles} from '../../../../backend/REST';
 
 export default function LandingNews() {
     const [articlesArray, setArticlesArray] = useState([]);
