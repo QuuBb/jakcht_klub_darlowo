@@ -11,10 +11,11 @@ function Article() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
+   
 
     useEffect(() => {
         // Fetch article based on the ID from the URL
-        fetch(`http://localhost:3000/backend/article?id=${id}`)
+        fetch(`http://localhost:3000/backend/article/${id}`)
             .then(response => response.json())
             .then(data => {
                 setArticle(data);
