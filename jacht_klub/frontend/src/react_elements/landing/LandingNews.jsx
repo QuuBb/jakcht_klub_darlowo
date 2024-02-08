@@ -1,25 +1,23 @@
 import React, {useState, useEffect} from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import QuickNews from './QuickNews';
 import NavigationButton from '../general/NavigationButton';
 import {FaArrowLeft, FaArrowRight, FaPlus} from 'react-icons/fa';
-import {getArticles} from '../../../../backend/REST';
 
 export default function LandingNews() {
     const [articlesArray, setArticlesArray] = useState([]);
 
     useEffect(() => {
-        // Pobierz artykuły po załadowaniu komponentu
-        fetchArticles();
+        fetch('http://localhost:3000/backend/articles')
+            .then(response => response.json())
+            .then(data => {
+                setArticlesArray(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
-
-    const fetchArticles = async () => {
-        try {
-            const articles = await getArticles(); // Użyj funkcji getArticles z pliku rest.js
-            setArticlesArray(articles);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
 
     return (
         <>
@@ -43,7 +41,7 @@ export default function LandingNews() {
 
                 <div className="flex items-center ml-20 hover:scale-105 transition-transform">
                     <a
-                        href="/news" // Aktualizacja linku do starszych artykułów
+                        href="../../src/html/news.html"
                         id="przejdzButton"
                         className="text-text mt-2 ml-2 md:text-m lg:text-l sm:text-base 2xl:text-xl font-jaldi font-bold "
                     >
